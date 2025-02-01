@@ -4,7 +4,8 @@ const upload = require("../middleware/multer");
 const postsController = require("../controllers/posts");
 const { ensureAuth, ensureGuest } = require("../middleware/auth");
 
-//Post Routes - simplified for now
+//Post Routes
+//Checks if the user is logged in to see the post page
 router.get("/:id", ensureAuth, postsController.getPost);
 
 router.post("/createPost", upload.single("file"), postsController.createPost);

@@ -22,7 +22,10 @@ module.exports = {
   getPost: async (req, res) => {
     try {
       const post = await Post.findById(req.params.id);
-      const comments = await Comment.find({post: req.params.id}).sort({ createdAt: "desc" }).lean();
+      //Getting the comment information, finding the comments associated with the post ID, sort them, and then pass everything we find into our post.ejs
+      const comments = await Comment.find({post: req.params.id}).sort({ createdAt: "asc" }).lean();
+      //post: post is a key value pair, carrying everything about the post
+      //comments: comments is a key value pair, carrying everything in the comments schema associated with the post
       res.render("post.ejs", { post: post, user: req.user, comments: comments });
     } catch (err) {
       console.log(err);

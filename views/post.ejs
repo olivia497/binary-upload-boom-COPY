@@ -27,8 +27,10 @@
     <div class="col-3 mt-5">
       <p><%= post.caption %></p>
     </div>
+    <!-- Comment Section -->
     <div class="mt-5">
       <h2>Add a comment</h2>
+      <!-- form is doing a post, creating a comment and sending up the post id to be written to the database -->
       <form action="/comment/createComment/<%=post._id%>" method="POST">
         <div class="mb-3">
             <label for="comment" class="form-label">Comment</label>
@@ -37,10 +39,22 @@
         <button type="submit" class="btn btn-primary">Submit</button>
       </form>
     </div>
+    <!-- List displaying each comment -->
     <ul>
       <% for(var i=0; i<comments.length; i++) {%>
         <li class="col-6 justify-content-between mt-5">
-          <%= comments[i].comment%>
+          <%= comments[i].createdBy%>: <%= comments[i].comment%>
+          <!-- user.id is already passed into the view from the post controller -->
+          <%if(comments[i].createdById == user.id) {%> 
+            <!-- forms can only use 2 methods, git and post
+            but we are using method override middleware to override the limitation telling our form it will be a delete method  -->
+            <form
+              action="/comment/deleteComment/<%= post.id %>/<%= comments[i].id %>?_method=DELETE"
+              method="POST"
+            >
+              <button class="btn btn-outline-danger" type="submit">Delete</button>
+            </form>
+            <% } %>
         </li>
       <% } %>
     </ul>
