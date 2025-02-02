@@ -1,6 +1,7 @@
 const cloudinary = require("../middleware/cloudinary");
 const Post = require("../models/Post");
 const Comment = require("../models/Comment");
+const Favourite = require("../models/Favourite");
 
 module.exports = {
   getProfile: async (req, res) => {
@@ -62,6 +63,30 @@ module.exports = {
       res.redirect(`/post/${req.params.id}`);
     } catch (err) {
       console.log(err);
+    }
+  },
+  favouritePost: async (req, res) => {
+    try {
+      //Get the post to copy its data
+      const post = await Post.findById(req.params.id);
+      if (!post) {
+          return res.status(404).send("Post not found");
+      }
+
+      //Create a favourite using the post's data
+      await Favourite.create({
+          title: post.title,
+          image: post.image, //Use existing image from the post
+          cloudinaryId: post.cloudinaryId, //Use existing cloudinary ID
+          caption: post.caption,
+          likes: post.likes,
+          user: req.user.id, // Associate it with the logged-in user
+      });
+        console.log("Post has been favourited!");
+        res.redirect(`/post/${req.params.id}`);
+      } catch (err) {
+        console.error(err);
+        res.status(500).send("Server Error");
     }
   },
   deletePost: async (req, res) => {

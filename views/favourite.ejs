@@ -1,0 +1,17 @@
+<%- include('partials/header') -%>
+  <div class="container">
+    <div class="row justify-content-center mt-5">
+      <ul>
+        <% for(var i=0; i<favourites.length; i++) {%>
+          <li class="col-6 justify-content-between mt-5">
+            <a href="/favourites/<%= favourites[i]._id%>">
+              <h4><%= favourites[i].title %></h4>
+              <img class="img-fluid" src="<%= favourites[i].image%>">
+              <span><%= favourites[i].caption %></span>
+            </a>
+          </li>
+        <% } %>
+      </ul>
+    </div>
+  </div>  
+<%- include('partials/footer') -%>
