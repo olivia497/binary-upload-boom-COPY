@@ -1,4 +1,4 @@
-<%- include('partials/header') -%>
+<!-- <%- include('partials/header') -%>
   <div class="container">
     <div class="row justify-content-center mt-5">
       <ul>
@@ -13,5 +13,27 @@
         <% } %>
       </ul>
     </div>
+  </div>  
+<%- include('partials/footer') -%> -->
+
+<%- include('partials/header') -%>
+  <div class="container mt-5" >
+    <% for(var i=0; i<favourites.length; i++) {%>
+      <a href="/favourites/<%= favourites[i]._id%>">
+      <div class="card mb-3" style="max-width: 80%;">
+        <div class="row g-0">
+         <div class="col-md-4">
+            <img class="img-fluid rounded-start" src="<%= favourites[i].image%>">
+          </div>
+          <div class="col-md-8">
+            <div class="card-body">
+              <h5 class="card-title"><%= favourites[i].title %></h5>
+              <p class="card-text"><%= favourites[i].caption %></p>
+              <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% } %>
   </div>  
 <%- include('partials/footer') -%>
